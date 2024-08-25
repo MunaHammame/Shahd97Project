@@ -58,7 +58,9 @@ while($row = $result->fetch_assoc()){
                                <?php }?>
                                 <img class="img-fluid" src="./ImageOfProductsUploded/<?php echo $row['image1']; ?>">
                                
-                            </a>
+                            </a>                             
+                            <img class="img-fluid" src="./ImageOfProductsUploded/<?php echo $row['image1']; ?>">
+
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading"><?php echo"اسم المنتج: " .$row["NameOfProduct"]. "";  ?></div>
                                 <div class="portfolio-caption-heading"><?php echo"<i class='fa fa-dollar'></i>  سعر المنتج     : " .$row["PriceOfProduct"]. "";  ?></div>

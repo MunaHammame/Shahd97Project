@@ -30,12 +30,12 @@ session_start();
  $resultInsertAddOrder=0;
  $rowNum ;
  $_SESSION['success']="";
- 
+
  $resultInsertAddnewProduct=0;
- 
+
  if(!isLoggedIn()){
      $_SESSION['type']="";
-     
+
  }
 if (isset($_POST['register'])) {
   register();
@@ -52,16 +52,16 @@ if (isset($_POST['register'])) {
  if (isset($_POST['login_admin'])) {
   login_admin();
   }
-  
+
    if (isset($_POST['InsertNewProduct_btn'])) {
   InsertNewProduct();
   }
-  
+
   if (isset($_GET['OrderProduct'])) 
   { 
      InsertNewOrder();
   }
-  
+
    if (isset($_GET['AcceptOrderId'])) 
   { 
      AcceptOrder();
@@ -79,8 +79,19 @@ if (isset($_POST['register'])) {
     header("MangeAccounts.php");
   echo "Error updating record: " . $conn->error;
 }
-  } 
-  
+  }
+
+    if (isset($_GET['DeletedProductID'])) 
+  { $sector=$_GET['Sector'];
+       $var= filter_input(INPUT_GET, 'DeletedProductID');
+       $var2= filter_input(INPUT_GET, 'Sector');
+    global $conn;
+    $sql = "Delete from products  WHERE ProductId ='$var'";
+    if ($conn->query($sql) === TRUE) {
+   header("Location: ViewProductsRelatedToSector.php?DeletedItem=true&SectorName=$sector");
+}
+  }
+
      if (isset($_GET['CommentIDTobeDelte'])) 
   {  
     $productID=  $_GET['ProductdeleteComment'];
@@ -99,7 +110,7 @@ if (isset($_POST['register'])) {
 
     if (isset($_GET['DeleteProductFromAdmin'])) 
   {   
-        
+
    $EmplyeeID=  $_GET['DeleteProductRelatedToEmploye'];
    $var= filter_input(INPUT_GET, 'DeleteProductFromAdmin');
     global $conn;
@@ -113,18 +124,18 @@ if (isset($_POST['register'])) {
   echo "Error updating record: " . $conn->error;
 }
   } 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
     if (isset($_GET['changeAccountStatusUid'])) 
   { 
       $var= filter_input(INPUT_GET, 'changeAccountStatusUid');
@@ -150,14 +161,21 @@ else{
     header("MangeAccounts.php");
   echo "678Error updating record: " . $conn->error;
 }
-    
+
 }
   }
   function AcceptOrder(){
     $orderid=  $_GET['AcceptOrderId'];
+    $productId=  $_GET['productId'];
+
 $var= filter_input(INPUT_GET, 'uid');
     global $conn;
     $sql = "UPDATE ordertable SET Accepted='1' WHERE OrderID=$orderid";
+
+    $sql8 = "UPDATE products SET ProductsAmount=ProductsAmount-1 WHERE ProductId =$productId and ProductsAmount>0";
+
+
+
     $sql3 = "select * from ordertable  WHERE OrderID=$orderid";
    $result = $conn->query($sql3);
     $row = $result->fetch_assoc();
@@ -170,7 +188,7 @@ $var= filter_input(INPUT_GET, 'uid');
   . "(UserID,EmployeUid,PostID_ProductID, CommentArea,CommentDate,ViewdByEmploye,NotificationType) ". "VALUES"
 . "('$EmployeID','$UserRequestTheorder','$PostID', '$CommentText', '$tdtp',0,'notification')";
     $conn->query($sql1);
-    if ($conn->query($sql) === TRUE)
+    if ($conn->query($sql) === TRUE &&$conn->query($sql8) === TRUE)
 {
   echo "<h3>Record updated successfully</h3>";
   header("Location:OrdersNotifactions.php");
@@ -179,24 +197,24 @@ $var= filter_input(INPUT_GET, 'uid');
   header("OrdersNotifactions.php");
   echo "Error updating record: " . $conn->error;
 }       
-      
+
   }
 
    function InsertNewOrder(){ 
   global $db, $errors,$resultInsertAddOrder;
-  $Employeid = e($_SESSION['EmployeIDRelatedFortheProduct']);
+  $Employeid = 4546;
   $userID=e($_SESSION['uid']);
   $UserOrderdPhone= $_SESSION['CurrentUsePhone'];
   $UserOrderCity=$_SESSION['CurrentUsecity'];
   $productID=$_GET['OrderProduct'];
+  $ProductSector=$_GET['Sector'];
   $UserOrderRegion=$_SESSION['CurrentUserRegion'];
-  
-    $query = "INSERT INTO ordertable 
+  $query = "INSERT INTO ordertable 
   (UserID,EmployeID, ProductID, phone, City,Region,Accepted) VALUES('$userID','$Employeid', '$productID', '$UserOrderdPhone', '$UserOrderCity','$UserOrderRegion',0)";
   $result= mysqli_query($db, $query);
   if($result){
       $resultInsertAddOrder = 1;
-      header("location:index.php");
+   header("Location: ViewProductsRelatedToSector.php?success=true&SectorName=$ProductSector");
   }
  }   
  if (isset($_GET['logout'])) {
@@ -205,7 +223,7 @@ $var= filter_input(INPUT_GET, 'uid');
   unset($_SESSION['user']);
   header("location:index.php");
  }
- 
+
   if (isset($_GET['ApprovalUserUid'])) {
     $var= filter_input(INPUT_GET, 'ApprovalUserUid');
     global $conn;
@@ -232,22 +250,22 @@ $var= filter_input(INPUT_GET, 'uid');
     header("ApprovalUsers.php");
   echo "Error updating record: " . $conn->error;
 }
-    
+
   }
- 
- 
+
+
  if(isset($_GET['EmployeIDofThisAccount']))
  { 
-     
+
    $uid =$_GET['EmployeIDofThisAccount'];  
    header("location:ProductDescription.php?uid=$uid");
  }
   if (isset($_POST['AddComment_btn']))
   {
   add_New_comment();
- 
+
  }
- 
+
  function add_New_comment(){
  global $db;    
  $tdtp=date("Y-m-d  H:i:s",time()); 
@@ -255,7 +273,7 @@ $var= filter_input(INPUT_GET, 'uid');
  $CommentText= e($_POST['commentArea']);
  $PostID=e($_POST['ProductID']);
  $EmployeUid=e($_POST['EmployeUid']);
- 
+
  $UserCommentedID=$_SESSION['uid'] ;
  if($CommentText=="")
  {
@@ -282,15 +300,17 @@ function register(){
   $fname    =  e($_POST['fname']);
   $user_name=  e($_POST['username']);
   $lname    =  e($_POST['lname']);
-  $alias    =  e($_POST['alias']);
+  $alias    =  e($_POST['username']);
   $phone    =  e($_POST['phone']);
   $email    =  e($_POST['email']);
   $birthday =  e($_POST['birthday']);
   $gender   =  e($_POST['gender']);
-  $city     =  e($_POST['city']);
-  $region   =  e($_POST['region']);
-  $career_area= e($_POST['career_area']);
-  $usertype =  e($_POST['usertype']);
+  $address   =  e($_POST['Address_input']);
+
+  $city     =  "NullValue";
+  $region   =  "NullValue";
+  $career_area= "NullValue";
+  $usertype =  "Normal";
   $password1=  e($_POST['password1']);
   $password2=  e($_POST['password2']);
  ///////////////////  VALIDATION DATA FROM USER  //////////////////////////////////
@@ -324,9 +344,6 @@ function register(){
   if (($age < 16 ) && ( $usertype == 'user')) {
      array_push($errors, "ﻏﻴﺮ ﻣﺴﻤﻮﺡ ﻟﻻﻃﻔﺎﻝ  ﻣﺎ ﺩﻭﻥ 15 ﺳﻨﺔ اﻟﻤﺸﺎﺭﻛﺔ ﻓﻲ ﻣﻮﻗﻊ ﻣﻬﻨﺘﻲ اﻭﻧﻼﻳﻦ "); 
   }
-  if ($gender == NULL) { 
-   array_push($errors, "اﻟﺠﻨﺲ ﻣﻄﻠﻮﺏ"); 
-  }
   if (empty($email)) { 
    array_push($errors, "اﻟﺒﺮﻳﺪ اﻻﻛﺘﺮﻭﻧﻲ ﻣﻄﻠﻮﺏ"); 
   }
@@ -355,19 +372,12 @@ function register(){
     $password = md5($password1);
     $uid= rand(1000000000000,9999999999999);
    //image  uplude 
-      $images = $_FILES['image']['name'];  
-      $tmp_dir=$_FILES['image']['tmp_name'];
-      $imageSize=$_FILES['image']['size'];
-      $imgExt=strtolower(pathinfo($images,PATHINFO_EXTENSION));
-      $upload_dir = 'UserUploadImages/';
-      $valid_extensions=array('jpeg', 'jpg');
-      $image=rand(10000, 1000000).".".$imgExt;
-      move_uploaded_file($tmp_dir, $upload_dir.$image);
+
    //INSERT QUERY 
   $tdtp=date("Y-m-d  H:i:s",time());
   $query = "INSERT INTO users 
-  (uid,fname, lname, phone, email, birthday, gender, password , type ,city,region,image,career_area,alias, activity,join_at,isApproval) VALUES
-  ('$uid','$fname', '$lname', '$phone', '$email', '$birthday', '$gender', '$password', '$usertype','$city','$region','$image','$career_area','$user_name','454','$tdtp',0)";
+  (uid,fname, lname, phone, email, birthday, gender, password , type ,city,region,image,career_area,alias, activity,join_at,isApproval,Address) VALUES
+  ('$uid','$fname', '$lname', '$phone', '$email', '$birthday', '$gender', '$password', '$usertype','$city','$region','h','$career_area','$user_name','454','$tdtp',0,'$address')";
    $result= mysqli_query($db, $query);
  if($result)
 { 
@@ -440,13 +450,10 @@ else
   if (($age < 16 ) && ( $usertype == 'user')) {
      array_push($errors, "ﻏﻴﺮ ﻣﺴﻤﻮﺡ ﻟﻻﻃﻔﺎﻝ  ﻣﺎ ﺩﻭﻥ 15 ﺳﻨﺔ اﻟﻤﺸﺎﺭﻛﺔ ﻓﻲ ﻣﻮﻗﻊ ﻣﻬﻨﺘﻲ اﻭﻧﻼﻳﻦ "); 
   }
-  if ($gender == NULL) { 
-   array_push($errors, "اﻟﺠﻨﺲ ﻣﻄﻠﻮﺏ"); 
-  }
   if (empty($email)) { 
    array_push($errors, "اﻟﺒﺮﻳﺪ اﻻﻛﺘﺮﻭﻧﻲ ﻣﻄﻠﻮﺏ"); 
   }
- 
+
   if (empty($password1)) { 
    array_push($errors, "ﻛﻠﻤﺔ اﻟﻤﺮﻭﺭ ﻣﻄﻠﻮﺑﺔ"); 
   }
@@ -515,15 +522,15 @@ else
   if (empty($lname)) { 
    array_push($errors, "اﻻﺳﻢ اﻟﺜﺎﻧﻲ ﻣﻄﻠﻮﺏ"); 
   }
-   
+
   if (empty($usertype)) { 
    array_push($errors, "ﺗﺤﺪﻳﺪ ﻧﻮﻉ اﻟﻤﺴﺘﺨﺪﻡ ﻣﻄﻠﻮﺏ "); 
   } 
-  
+
   if (empty($email)) { 
    array_push($errors, "اﻟﺒﺮﻳﺪ اﻻﻛﺘﺮﻭﻧﻲ ﻣﻄﻠﻮﺏ"); 
   }
- 
+
   if (empty($password1)) { 
    array_push($errors, "ﻛﻠﻤﺔ اﻟﻤﺮﻭﺭ ﻣﻄﻠﻮﺑﺔ"); 
   }
@@ -555,7 +562,7 @@ $query = "INSERT INTO users (uid ,fname, lname, email , password , type ,activit
    //  header('location:register.php');    
   }
  }
- //LOGIN USER FUNCTION 
+ // USER FUNCTION 
  function login(){
   global $db, $username, $errors;
   $username = e($_POST['username']);
@@ -590,21 +597,19 @@ $query = "INSERT INTO users (uid ,fname, lname, email , password , type ,activit
   if ($password == $row['password'])
   {
    if (mysqli_num_rows($result) == 1)
-   { // user found 
-    //$_SESSION['user'] = $row;
-    //$logged_in_user_id = mysqli_insert_id($db);
-    //$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
+   { 
     $_SESSION['success']  = "You are now logged in";
     $_SESSION['uid'] = $row['uid'];
+    $_SESSION['id'] = $row['id'];
     $_SESSION['fname'] =$row['fname'];
     $_SESSION['alias']=$row['alias'];
     $_SESSION['type']= $row['type'];
     $_SESSION['CurrentUsePhone'] =$row['phone'];
     $_SESSION['CurrentUsecity'] =$row['city'];
     $_SESSION['CurrentUserRegion'] =$row['region'];
-       
+
     header('location: index.php');
-    } 
+    }
    }
    array_push($errors, " خطأ في كلمة المرور");
   }
@@ -615,16 +620,14 @@ $query = "INSERT INTO users (uid ,fname, lname, email , password , type ,activit
 
   $username = e($_POST['username']);
   $password = e($_POST['password']);
- 
+
   if ($username == NULL) {
    array_push($errors, "اﻟﺒﺮﻳﺪ اﻻﻟﻜﺘﺮﻭﻧﻲ ﻣﻄﻠﻮﺏ ");
   }
   if ($password == NULL) {
    array_push($errors, "  ﻛﻠﻤﺔ اﻟﻤﺮﻭﺭ ﻣﻄﻠﻮﺑﺔ   ");
   }
-
  // CHICK ACCOUNT ACTIVATY 
-
      $query = "SELECT activity FROM users WHERE email = '$username' or phone='$username' LIMIT 1";
      $result = $db->query($query);
      $row = $result->fetch_assoc();
@@ -705,12 +708,12 @@ $query = "INSERT INTO users (uid ,fname, lname, email , password , type ,activit
     if($resultInsertAddnewProduct === 1) {
       echo '<div class="alert alert-success" align="right">تم اضافة المنتج بنجاح <a href="login.php"></a></div>';      
   }
-  
+
       if($resultInsertAddOrder === 1) {
       echo '<div class="alert alert-success" align="right" >تم اضافة المنتج بنجاح <a href="login.php"></a></div>';      
   }
-  
-  
+
+
  }
 // To copy String  by  count number 
 function PrintString($val , $string){
@@ -765,7 +768,7 @@ $sql = "SELECT image from users where uid =".$uid." ";
    $SqlResultclient = $conn->query($sql);
       if ($SqlResultclient->num_rows > 0) {
          $Sqlclient = $SqlResultclient->fetch_assoc();
- 
+
      if (strpos($Sqlclient['image'], 'jpg') !== false) {
           $image = $Sqlclient['image'];
       }else{
@@ -776,7 +779,7 @@ $sql = "SELECT image from users where uid =".$uid." ";
    } 
 //Functions Add by muna
 function Display_Users($career_area) {
-    
+
 global $conn;
    $sql = "SELECT uid,fname,lname,phone,email,image,city from users where career_area ='$career_area' and isApproval=1 ";   
    //career_area =".$career_area." and
@@ -800,7 +803,7 @@ if ($result->num_rows > 0) {
 } 
 }   
 function Display_SearchedUsers($career_area,$city) {
-    
+
 global $conn;
    $sql = "SELECT uid,fname,lname,phone,email,image,city from users where career_area ='$career_area' and isApproval=1 and city='$city' ";   
    //career_area =".$career_area." and
@@ -818,7 +821,7 @@ if ($result->num_rows > 0) {
   <div class="desc"><?php echo"<br> " .$row["fname"]. ": الاسم<br>";    ?> </div>
   <div class="desc"><?php echo"<br> " .$row["phone"]. ": للتواصل<br>"; ?> </div>
    <div class="desc"><?php echo"<br> " .$row["city"]. ": city<br>"; ?> </div>
-  
+
  </div>
   <?php      
     }
@@ -849,26 +852,40 @@ global $conn;
   echo "<td><img src='assets/img/cancel.png' height=20px style='margin-left: 25px'></i>   </td>";
   echo "</tr>";
   echo "</table>";
-  
+
   }
  }
- function InsertNewProduct(){
+function InsertNewProduct(){
   global $db, $errors,$resultInsertAddnewProduct;  
  //POST DATA FROM USER TO INSALIZEINF 
-  $Name_of_Product  = e($_POST['NameOfProduct_input']);
-  $Price_Of_Product = e($_POST['PriceOfProduct_input']);
-  $Discription_of_product = e($_POST['DiscriptionOfProduct_input']);
+  $NameOfProduct_Var  = e($_POST['NameOfProduct_input']);
+  $PriceOfProduct_Var = e($_POST['PriceOfProduct_input']);
+  $DiscriptionOfProduct_Var = e($_POST['DiscriptionOfProduct_input']);
+  $ProductSector_Var  = e($_POST['ProductSector_input']);
+  $ProductAmount_VAr = e($_POST['ProductAmount_Input']);
+    if (empty($NameOfProduct_Var)) { 
+   array_push($errors, " الرجاء ادخال اسم المنتج"); 
+  }
+  if (empty($PriceOfProduct_Var)) { 
+   array_push($errors, "الرجاء ادخال سعر المنتج"); 
+  }
+  if (empty($DiscriptionOfProduct_Var)) { 
+   array_push($errors, "الرجاء ادخال وصف المنتج"); 
+  }
+  if (empty($ProductAmount_VAr)) { 
+   array_push($errors, " الرجاء ادخال الكمية   "); 
+  }
 
-  $EmployeUid  =  e($_SESSION['uid']);
 
- ///////////////////  VALIDATION DATA FROM USER  //////////////////////////////////
- // cliped code 
-///////////////////////////////////////////////////////////////////////////////////
-  if (count($errors) == 0) {
-   //image  for first image 
-        $images = $_FILES["Imagepath1_input"]["name"];  
+
+
+  if (count($errors) == 0 ) {
+
+         $images = $_FILES["Imagepath1_input"]["name"];  
         $tmp_dir=$_FILES["Imagepath1_input"]["tmp_name"];
-        $imageSize=$_FILES['Imagepath1_input']['size'];   
+        $imageSize=$_FILES['Imagepath1_input']['size'];  
+        if($imageSize = 0){array_push($errors, " الرجاء ادخال الصورة 1     "); 
+  }
         $imgExt=strtolower(pathinfo($images,PATHINFO_EXTENSION));
         $upload_dir = 'ImageOfProductsUploded/';
         $valid_extensions=array('jpeg', 'jpg');
@@ -883,13 +900,28 @@ global $conn;
         $valid_extensions=array('jpeg', 'jpg');
         $image2=rand(10000, 1000000).".".$imgExt;
         move_uploaded_file($tmp_dir, $upload_dir.$image2);
-      
-   //INSERT QUERY 
-  $query = "INSERT INTO productdetails 
-  (NameOfProduct,PriceOfProduct, DiscriptionOfProduct, image1, EmployeUid, image2) VALUES
-  ('$Name_of_Product','$Price_Of_Product', '$Discription_of_product', '$image1', '$EmployeUid', '$image2')";
-   $result= mysqli_query($db, $query);
-
+        //image for third image 
+        $images = $_FILES["Imagepath3_input"]["name"];  
+        $tmp_dir=$_FILES["Imagepath3_input"]["tmp_name"];
+        $imageSize=$_FILES['Imagepath2_input']['size'];   
+        $imgExt=strtolower(pathinfo($images,PATHINFO_EXTENSION));
+        $upload_dir = 'ImageOfProductsUploded/';
+        $valid_extensions=array('jpeg', 'jpg');
+        $image3=rand(10000, 1000000).".".$imgExt;
+        move_uploaded_file($tmp_dir, $upload_dir.$image3);
+        //image for forth image 
+       $images = $_FILES["Imagepath4_input"]["name"];  
+        $tmp_dir=$_FILES["Imagepath4_input"]["tmp_name"];
+        $imageSize=$_FILES['Imagepath4_input']['size'];   
+        $imgExt=strtolower(pathinfo($images,PATHINFO_EXTENSION));
+        $upload_dir = 'ImageOfProductsUploded/';
+        $valid_extensions=array('jpeg', 'jpg');
+        $image4=rand(10000, 1000000).".".$imgExt;
+        move_uploaded_file($tmp_dir, $upload_dir.$image4);
+   $query = "INSERT INTO products 
+  (ProductName,ProductPrice, ProductSector, ProductDescription, ProductsAmount, ProductsImg1,ProductsImg2,ProductsImg3,ProductsImg4) VALUES
+  ('$NameOfProduct_Var','$PriceOfProduct_Var', '$ProductSector_Var','$DiscriptionOfProduct_Var','$ProductAmount_VAr','$image2','$image2','$image3','$image4')";
+   $result= mysqli_query($db, $query); 
    if($result)
 { 
 $resultInsertAddnewProduct=1;
@@ -898,7 +930,4 @@ else
 { 
  array_push($errors, " يوجد مشكلة في انشاء الحساب  ");   
 }
-
-  
- }}
- 
+}}

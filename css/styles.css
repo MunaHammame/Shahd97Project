@@ -10,6 +10,13 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+body{
+  background: #f093fb;
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+}
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -2165,11 +2172,6 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
-.form-label {
-  margin-bottom: 0.5rem;
-  color: white;
-}
-
 .col-form-label {
   padding-top: calc(0.375rem + 1px);
   padding-bottom: calc(0.375rem + 1px);
@@ -2196,23 +2198,7 @@ progress {
   color: #6c757d;
 }
 
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
@@ -2368,6 +2354,7 @@ progress {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   border-radius: 0.3rem;
+  text-align: center !important;
 }
 .form-control-lg::-webkit-file-upload-button {
   padding: 0.5rem 1rem;
@@ -3038,23 +3025,18 @@ textarea.form-control-lg {
   pointer-events: none;
   opacity: 0.65;
 }
-
 .btn-primary {
   color: #fff;
   background-color: #ffc800;
   border-color: #ffc800;
   margin-top:10px; 
-  
 }
 .btn-primary-edit{
    color: #fff;
   background-color: #ffc800;
   border-color: #ffc800;
   margin-left:770px; 
-    
 }
-
-
 .btn-primary:hover {
   color: #fff;
   background-color: #d9aa00;
@@ -3079,7 +3061,6 @@ textarea.form-control-lg {
   background-color: #ffc800;
   border-color: #ffc800;
 }
-
 .btn-secondary {
   color: #fff;
   background-color: #6c757d;
@@ -4534,7 +4515,6 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color:  rgba(0.0,0.0,0.0,0.5);
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
@@ -4566,6 +4546,8 @@ textarea.form-control-lg {
 .card-body {
   flex: 1 1 auto;
   padding: 1rem 1rem;
+  
+
 }
 
 .card-title {
@@ -5626,7 +5608,7 @@ textarea.form-control-lg {
   margin: 0.25rem;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 1000px) {
   .modal-dialog {
     max-width: 500px;
     margin: 1.75rem auto;
@@ -7312,6 +7294,7 @@ textarea.form-control-lg {
 .my-3 {
   margin-top: 1rem !important;
   margin-bottom: 1rem !important;
+  color : white;
 }
 
 .my-4 {
@@ -7391,6 +7374,7 @@ textarea.form-control-lg {
 
 .mb-1 {
   margin-bottom: 0.25rem !important;
+  text-align: center !important;
 }
 
 .mb-2 {
@@ -7403,6 +7387,7 @@ textarea.form-control-lg {
 
 .mb-4 {
   margin-bottom: 1.5rem !important;
+  text-align: center !important;
 }
 
 .mb-5 {
@@ -7511,7 +7496,7 @@ textarea.form-control-lg {
 }
 
 .py-3 {
-  padding-top: 1rem !important;
+  padding-top: 3rem !important;
   padding-bottom: 1rem !important;
 }
 
@@ -11319,7 +11304,6 @@ textarea.form-control-lg {
 html {
   scroll-padding-top: 4.5rem;
 }
-
 body {
  position: relative;
  overflow-x: hidden;
@@ -11328,7 +11312,6 @@ body {
 p {
   line-height: 1.75;
 }
-
 .page-section {
   padding: 6rem 0;
 }
@@ -11336,6 +11319,7 @@ p {
   font-size: 2.5rem;
   margin-top: 0;
   margin-bottom: 1rem;
+  color :#eb6cd0;
 }
 .page-section h3.section-subheading, .page-section .section-subheading.h3 {
   font-size: 1rem;
@@ -11343,11 +11327,11 @@ p {
   font-style: italic;
   font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   margin-bottom: 4rem;
+  color:#eb6cd0;
 }
-
 @media (min-width: 1000px) {
   section {
-    padding: 9rem 0;
+    padding: 4rem 0;
   }
 }
 .btn-xl {
@@ -11369,9 +11353,7 @@ p {
 }
 
 #mainNav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: #212529;
+  background-color: #f4d4ee;
 }
 #mainNav .navbar-toggler {
   padding: 0.75rem;
@@ -11393,28 +11375,27 @@ p {
 #mainNav .navbar-nav .nav-item .nav-link {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.95rem;
-  color: #fff;
+  color: #eb6cd0;
   letter-spacing: 0.0625em;
+  font-weight: bold;
 }
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
-  color: #ffc800;
+  color: white;
 }
 
 @media (min-width: 992px) {
   #mainNav {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     border: none;
-    
-    transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
   }
   #mainNav .navbar-brand {
     font-size: 1.5em;
-    transition: font-size 0.3s ease-in-out;
+    transition: font-size 0.1s ease-in-out;
   }
   #mainNav .navbar-brand img {
-    height: 2rem;
-    transition: height 0.3s ease-in-out;
+    height: 3rem;
+    transition: height 0.1s ease-in-out;
   }
   #mainNav.navbar-shrink {
     padding-top: 1rem;
@@ -11426,7 +11407,7 @@ p {
   }
   #mainNav.navbar-shrink .navbar-brand svg,
 #mainNav.navbar-shrink .navbar-brand img {
-    height: 1.5rem;
+    height: 3rem;
   }
   #mainNav .navbar-nav .nav-item {
     margin-right: 1rem;
@@ -11436,15 +11417,16 @@ p {
   }
 }
 header.masthead {
-  margin-top: 6rem;
-  padding-bottom: 6rem;
+
+  padding-bottom: 10rem;
   text-align: center;
   color: #fff;
-  background-image: url("../assets/img/12.png");
+  background-image: url("../Images/IndexImg.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
-  background-size: cover;
+  background-size: cover; 
+
 }
 header.masthead .masthead-subheading {
   font-size: 1.5rem;
@@ -11463,7 +11445,7 @@ header.masthead .masthead-heading {
 
 @media (min-width: 768px) {
   header.masthead {
-   padding-top: 5rem;
+   padding-top: 20rem;
     padding-bottom: 12.5rem;
   }
   header.masthead .masthead-subheading {
@@ -11616,19 +11598,20 @@ header.masthead .masthead-heading {
   position: absolute;
   z-index: 100;
   left: 0;
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   margin-left: 0;
   text-align: center;
   color: white;
-  border: 7px solid #e9ecef;
+  border: 7px solid #eb6cd0;
   border-radius: 100%;
-  background-color: #ffc800;
+  background-color: white;
 }
 .timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
   font-size: 10px;
   line-height: 14px;
   margin-top: 12px;
+  color:#eb6cd0;
 }
 .timeline > li.timeline-inverted > .timeline-panel {
   float: right;
@@ -11758,7 +11741,7 @@ section#contact {
   background-position: center;
 }
 section#contact .section-heading {
-  color: #fff;
+  color: #eb6cd0;
 }
 section#contact form#contactForm .form-group {
   margin-bottom: 1.5rem;
@@ -11832,11 +11815,9 @@ section#contact form#contactForm :-ms-input-placeholder {
   border-radius: 2px;
   margin-left: 16px;
 }
-
 .notification:hover {
   background: red;
 }
-
 .notification .badge {
   position: absolute;
   top: -20px;
@@ -11846,18 +11827,223 @@ section#contact form#contactForm :-ms-input-placeholder {
   background: red;
   color: white;
 }
-
   .tb { border-collapse: collapse;  margin: 10% }
   .tb th, .tb td { padding: 5px; border: solid 1px #777; }
-  .tb th { background-color: lightblue; }
-
+  .tb th { background-color:  #f4d4ee; }
   .ProductForm
   {
-  margin:50%;    
-        
+  margin:50%;        
   }
   .ProductForm label
   {
       color:red;
       text-align:right;
   }
+  .gradient-custom {
+/* fallback for old browsers */
+background: #f093fb;
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+.card-registration .select-arrow {
+top: 110000px;
+} 
+.image-container {
+    width: 100%; /* Container takes full width of its parent */
+    text-align: center; /* Center the image horizontally */
+}
+.responsive-image {
+    max-width: 100%; /* Image scales with container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove inline spacing */
+    margin: 0 auto; /* Center the image horizontally */
+}
+.btn-submit {
+  color: #fff !important ;
+  background-color: #eb6cd0 !important; 
+  border-color: #eb6cd0 !important;
+}
+.btn-submit-edit{
+   color: #fff !important;
+  background-color: #eb6cd0 !important;
+  border-color: #eb6cd0 !important;
+  margin-left:770px !important; 
+}
+.btn-submit:hover {
+  color: #fff !important;
+  background-color: #996f90 !important;
+  border-color: #996f90 !important;
+}
+.social div:hover{
+  background-color: rgba(255,255,255,0.47);
+}
+.social .fb{
+  margin-left: 25px;
+}
+.social i{
+  margin-right: 4px;
+}
+.social{
+  margin-top: 30px;
+  display: flex;
+}
+.social div{
+  background: red;
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px 10px 10px 5px;
+  background-color: #eb6cd0;
+  color: white;
+  text-align: center;
+}
+/*Muna Added Css */ 
+
+.form-custom{
+    width: 400px;
+    background-color: white;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 40%;
+    left: 50%;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 20px 35px;
+}
+.form-custom{
+    width: 400px;
+    background-color: white;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 40%;
+    left: 50%;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 20px 35px;
+}
+.form-custom-addnewproduct{
+    width: 1000px;
+    background-color: white;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 55%;
+    left: 50%;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 20px 35px;
+}
+.form-submit{
+  color: #fff !important ;
+  background-color: #eb6cd0 !important; 
+  border-color: #eb6cd0 !important;
+   display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.75rem 0.75rem;
+     margin-top: 10px;
+    margin-left: 100px;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-a{color:#eb6cd0; margin:50px;
+}
+.form-label {
+     display: block;
+  margin-bottom: 0.5rem;
+  color: #eb6cd0;
+  font-weight: bold;
+   text-align: right;
+    font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", 
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.form-control {
+   color: #eb6cd0 !important;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control::placeholder{
+      color: #eb6cd0 !important;
+      text-align: center; 
+}
+.dropdown {
+    background-color: #f9f9f9; /* Light background */
+    color: #333; /* Text color */
+    padding: 10px; /* Padding inside the select box */
+    border: 1px solid #ddd; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    width: 200px; /* Width of the select box */
+    cursor: pointer; /* Pointer cursor */
+}
+
+/* Style the dropdown when focused */
+.dropdown:focus {
+    border-color: #4CAF50; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+div.gallery {
+    margin-top: 30px; 
+    border: 1px solid #ccc;
+    float: left;
+    width: 250px;
+    margin-left: 50px;
+    background-color: #f4d4ee;
+}
+div.gallery img {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px; 
+  margin-left: 20%;
+}
+div.desc {
+  padding-bottom: 5px;
+  text-align: center;
+  color: #eb6cd0;
+}
+.alert {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    text-align: right;
+}
+.alert-danger {
+    background-color: #dca7a7;
+    color: #155724;
+    border: 1px solid #dca7a7;
+    text-align: right;
+    
+    
+}

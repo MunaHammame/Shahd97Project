@@ -19,27 +19,7 @@
     <?php include ('Nav.php') ?>
 
 </head>
-<style>
-div.gallery{
-  margin-top: 30px;
-  margin-left: 30px;
-  border: 1px solid #ccc;
-  float: left;
-  width: 250px;
-}
-div.gallery:hover {
-  border: 1px solid #777;
-}
-div.gallery img {
-  width: 100px;
-  height: 100px;
-  margin-top: 10px;
-}
-div.desc {
-  padding-bottom: 5px;
-  text-align: center;
-}
-</style>
+
 <script>
   function get_citys()
     {

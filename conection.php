@@ -4,7 +4,7 @@
     $db_host='localhost';
     $db_user='root';
     $db_pass='';
-    $db_name='mihnati';
+    $db_name='shahedwebsite_db';
     $password='';
 
      try {
@@ -20,10 +20,10 @@
 
 	$db = new mysqli("localhost", "root", "");
 	mysqli_set_charset($db, 'utf8');
-	mysqli_select_db($db,"mihnati");
+	mysqli_select_db($db,"shahedwebsite_db");
 
 ///////////////////////////// FUNCTION ////////////////////////////////////
-	$conn = mysqli_connect('localhost', 'root','', 'mihnati');
+	$conn = mysqli_connect('localhost', 'root','', 'shahedwebsite_db');
     $conn->set_charset("utf8");
 //
 ?>

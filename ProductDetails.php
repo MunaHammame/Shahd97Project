@@ -8,6 +8,96 @@
   ?>
 </head>
 <style>
+
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 5s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
   /* Split the screen in half */
 .split {
   height: 100%;
@@ -126,74 +216,90 @@ section#comment{
 </style>
 <body>
 <?PHP 
- if($_GET['CommentID'])
- {
- $CommentIDFromPost=  $_GET['CommentID'];
-$var= filter_input(INPUT_GET, 'uid');
-    global $conn;
-    $sql = "UPDATE commenttable SET ViewdByEmploye='1' WHERE CommentID=$CommentIDFromPost";
-    if ($conn->query($sql) === TRUE)
-{
-  echo "<h3>Record updated successfully</h3>";
 
-}  
- }
  global $conn;
  $sql = "SELECT ID, NameOfProduct,PriceOfProduct,DiscriptionOfProduct,image1,EmployeUid,image2 from productdetails where ID ='$ProductID' ";   
+
+ $sql = "SELECT * from products where ProductId  ='$ProductID' ";   
+
  $result = $conn->query($sql);
  $row = $result->fetch_assoc();
 
 ?>
-<div class="split left">
-  <div class="centered">
+
+       <h2>صور  المنتج  </h2>
+    <div class="slideshow-container" style="margin-top:60px">
+<div class="mySlides ">
+  <div class="numbertext">1 / 4</div>
+      <img  width="70%" height="50%"  src="ImageOfProductsUploded/<?php echo ''.$row['ProductsImg1'].'' ?>" alt="Avatar woman">
+  <div class="text">Caption Text</div>
+</div>
+
+<div class="mySlides ">
+  <div class="numbertext">2 / 4</div>
+      <img width="70%"height="50%"  src="ImageOfProductsUploded/<?php echo ''.$row['ProductsImg2'].'' ?>" alt="Avatar woman">
+  <div class="text">Caption Two</div>
+</div>
+<div class="mySlides">
+  <div class="numbertext">3 / 4</div>
+     <img width="70%" height="50%"src="ImageOfProductsUploded/<?php echo ''.$row['ProductsImg3'].'' ?>" alt="Avatar woman">
+  <div class="text">Caption Three</div>
+</div>
+        
+<div class="mySlides ">
+  <div class="numbertext">4 / 4</div>
+      <img width="70%" height="50%" src="ImageOfProductsUploded/<?php echo ''.$row['ProductsImg4'].'' ?>" alt="Avatar woman">
+  <div class="text">Caption Four</div>
+</div>
+
+<a class="prev" onclick="plusSlides(-1)">❮</a>
+<a class="next" onclick="plusSlides(1)">❯</a>
+</div>
+<br>
+
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+    <span class="dot" onclick="currentSlide(4)"></span> 
+
+</div>
+
+  <div>
       <h2>صور  المنتج  </h2>
       <br>
-      <img src="ImageOfProductsUploded/<?php echo ''.$row['image1'].'' ?>" alt="Avatar woman">
-      <img src="ImageOfProductsUploded/<?php echo ''.$row['image2'].'' ?>" alt="Avatar woman">
-      <h3 style="text-algin:right"> <?php echo ''.$row['NameOfProduct'].'' ?> : أسم المنتج</h3>
-      <h3 style="text-algin:right"> <?php echo ''.$row['PriceOfProduct'].'' ?> : سعر المنتج</h3>
-      <h3 style="text-algin:right"> <?php echo ''.$row['DiscriptionOfProduct'].'' ?> : وصف المنتج</h3>
+      <h3 style="text-algin:left"> <?php echo ''.$row['ProductName'].'' ?> : أسم المنتج</h3>
+      <h3 style="text-algin:right"> <?php echo ''.$row['ProductPrice'].'' ?> : سعر المنتج</h3>
+      <h3 style="text-algin:left"> <?php echo ''.$row['ProductDescription'].'' ?> : وصف المنتج</h3>
   </div>
-</div>
- <form method="post" enctype="multipart/form-data">
-<div class=" split right FixedHeightContainer">
-<input type="text" style="visibility: hidden" value="<?Php echo ''.$row['EmployeUid'].'';?>" name="EmployeUid">
-<h3>التعليقات</h3>  
-<?PHP
- global $conn;
- $sql = "SELECT * from commenttable inner join users on UserID=uid where PostID_ProductID= $ProductID and NotificationType='comment'" ;   
- $result = $conn->query($sql);
- while($row = $result->fetch_assoc())
- { 
- echo '<div class="mainContainer"><img src="UserUploadImages/'.$row['image'].'"><div class="header">'
-         . '<a  href="ProfilePage.php?useruid='.$row["uid"].'">'.$row['fname'].' '.$row['lname'].'</a> '.'Comment At '.$row['CommentDate']. 
-         '</div ><div class="comment"><p>'.$row['CommentArea']. '';
- 
- if($_SESSION['type']=='admin'){
-    echo ' <a href="server.php?CommentIDTobeDelte='.$row['CommentID'].='&ProductdeleteComment='.$row['PostID_ProductID'].'">
-      <img src="assets/img/cancel.png" height="20px" style="margin-left: 300px;border:none;width:30px;height:30px"></a>';
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
 }
- if($_SESSION['uid']==$row['EmployeUid']){
-    echo ' <a href="server.php?CommentIDTobeDelte='.$row['CommentID'].='&ProductdeleteComment='.$row['PostID_ProductID'].'">
-      <img src="assets/img/cancel.png" height="20px" style="margin-left: 300px;border:none;width:30px;height:30px"></a>';
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
 }
- 
- echo '</p></div></div>';      
 
-
-  
- 
- 
- } 
-?>    
-    <?php if($_SESSION['type']=='employer' or $_SESSION['type']=='user' or $_SESSION['type']=='admin' ){  ?>
-<textarea name="commentArea" class="form-control is-invalid" id="commentArea" placeholder="Your Comment *" data-sb-can-submit="no" required></textarea>
-<input type="text" style="visibility: hidden" value="<?Php echo ''.$ProductID.'';?>" name="ProductID">
-
-    <button class="btn btn-primary"type="submit" name="AddComment_btn" >Add Comment </button>    <?php }?>   
-  
-</div>     
-    
- </form>
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
 </body>
 </html>
