@@ -48,7 +48,7 @@
         <option value="MostlzmatTajmelea">مستلزمات تجميلية</option>
        <option value="ُEnergy">أدوات كهربائية</option>
         <option value="Azafr">أظافر</option>
-        <option value="kasat"> كاسات</option>
+        <option value="Mobile"> موبايل</option>
         <option value="shont"> شنط</option>
         <option value="3otor"> عطور</option>
     </select>                                       
