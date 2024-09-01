@@ -8,7 +8,7 @@ and open the template in the editor.
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Shahed Project </title>
         <?php include ('Header.php'); ?>
     </head>
     <body id="page-top">
@@ -16,7 +16,7 @@ and open the template in the editor.
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase"style="color:white">عن مشروعنا</h2>
+                    <h2 class="section-heading text-uppercase"style="color:white">ما هو متجر شهد</h2>
                     <h3 class="section-subheading"style="color:white">تعرف علينا</h3>
                 </div>
                  <?php display_error() ?>
@@ -44,7 +44,7 @@ and open the template in the editor.
                             </div>
                     </li>
                     <li >
-                        <div class="timeline-image"><img class="rounded-circle img-fluid-edited " src="Images/Bag.jpg" alt="..." /></div>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid-edited " src="Images/taxi.png" alt="..." /></div>
                         <div class="timeline-panel">
                             <div class="timeline-heading">
                                
@@ -157,15 +157,15 @@ and open the template in the editor.
                     
                          <div class="col-md-4">
                         <span class="fa-stack fa-4x">
-           <a href="ViewProductsRelatedToSector.php?SectorName=kasat">
-                        <img src="Images/Cups.jpg" style="width:130px; height:130px; border: 1px solid #000; border-radius: 55%" >
+           <a href="ViewProductsRelatedToSector.php?SectorName=Mobile">
+                        <img src="Images/covers.jpg" style="width:130px; height:130px; border: 1px solid #000; border-radius: 55%" >
                          </a>
                         </span>
-                        <h4 class="my-3">كاسات</h4>
-                        <p class="text-white-50">قسم الكاسات </p>
+                        <h4 class="my-3">إكسسوارت موبايل</h4>
+                        <p class="text-white-50">قسم الإكسسوارت موبايل   </p>
                     </div>
                     
-                    
+                    <img src="../../../Users/Muna.Hammamy/Desktop/shahed/covers.jpg" alt=""/>
                        <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                                  <a href="ViewProductsRelatedToSector.php?SectorName=shont">      
